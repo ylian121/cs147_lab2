@@ -1,10 +1,10 @@
 NVCC        = nvcc
 ifeq (,$(shell which nvprof))
-NVCC_FLAGS  = -O3 -I/usr/local/cuda/include 
+NVCC_FLAGS  = -O3 
 else
-NVCC_FLAGS  = -O3 -I/usr/local/cuda/include --std=c++03
+NVCC_FLAGS  = -O3 --std=c++03
 endif
-LD_FLAGS    = -lcudart -L/usr/local/cuda/lib64 
+LD_FLAGS    = -lcudart  
 EXE	        = reduction
 OBJ	        = main.o support.o
 
