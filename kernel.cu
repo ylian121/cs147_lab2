@@ -13,8 +13,9 @@ __device__ unsigned int warpDistribution[33] = {0};
 __device__ void countWarpDistribution(){
 
       unsigned int mask = __popc(__activemask());
-      atomicAdd(&warpDistribution[mask],1);
-
+      if(threadIdx.x % 32 == 0){
+        atomicAdd(&warpDistribution[mask],1);
+      }
 }
 
 __device__ void printWarpDistribution(){
