@@ -8,6 +8,22 @@
 
 #define BLOCK_SIZE 512
 
+__device__ unsigned int warpDistribution[33] = {0};
+
+__device__ void countWarpDistribution(){
+
+      unsigned int mask = __popc(__activemask());
+      atomicAdd(&warpDistribution[mask],1);
+
+}
+
+__device__ void printWarpDistribution(){
+    printf("\n Warp Distribution: \n");
+    for(int i = 0; i < 33; i++){
+        printf("W%d: %u, ",i,warpDistribution[i]);
+    }
+    printf("\n\n");
+}
 
 __global__ void naiveReduction(float *out, float *in, unsigned size)
 {
