@@ -36,6 +36,9 @@ __global__ void naiveReduction(float *out, float *in, unsigned size)
     // INSERT KERNEL CODE HERE
     // NAIVE REDUCTION IMPLEMENTATION
 
+      
+    if(threadIdx.x == 0 && blockIdx.x == 0)
+      printWarpDistribution();  
 }
 
 __global__ void optimizedReduction(float *out, float *in, unsigned size)
@@ -49,5 +52,6 @@ __global__ void optimizedReduction(float *out, float *in, unsigned size)
     // INSERT KERNEL CODE HERE
     // OPTIMIZED REDUCTION IMPLEMENTATION
 
-
+    if(threadIdx.x == 0 && blockIdx.x == 0)
+      printWarpDistribution();  
 }
