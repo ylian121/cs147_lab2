@@ -52,6 +52,10 @@ __global__ void naiveReduction(float *out, float *in, unsigned size)
       if (t % stride == 0)
         partialSum[2*t] += partialSum[2*t+stride];
     }
+    
+    if(t == 0){
+      out[blockIdx.x] = partialSum[0];
+    }
       
     if(threadIdx.x == 0 && blockIdx.x == 0)
       printWarpDistribution();  
@@ -82,6 +86,10 @@ __global__ void optimizedReduction(float *out, float *in, unsigned size)
       __syncthreads();
       if (t % stride == 0)
         partialSum[2*t] += partialSum[2*t+stride];
+    }
+    
+    if(t == 0){
+      out[blockIdx.x] = partialSum[0];
     }
 
     if(threadIdx.x == 0 && blockIdx.x == 0)
