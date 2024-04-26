@@ -36,16 +36,16 @@ __global__ void naiveReduction(float *out, float *in, unsigned size)
 
     // INSERT KERNEL CODE HERE
     // NAIVE REDUCTION IMPLEMENTATION
-    __shared__ float partialSum[@*BLOCK_SIZE];
+    __shared__ float partialSum[2*BLOCK_SIZE];
     
     unsigned int t = threadIdx.x;
     unsigned int start = 2*blockIdx.x*blockDim.x;
     
-    partialSum[t] = input[start + t];
-    partialSum[blockDim.x+t] = input[start + blockDim.x+t];
+    partialSum[t] = in[start + t];
+    partialSum[blockDim.x+t] = in[start + blockDim.x+t];
     
     for(unsigned int stride = 1;
-      stride <= blockDim.x;  stride *= 2;
+      stride <= blockDim.x;  stride *= 2)
     {
       
       __syncthreads();
@@ -67,16 +67,16 @@ __global__ void optimizedReduction(float *out, float *in, unsigned size)
 
     // INSERT KERNEL CODE HERE
     // OPTIMIZED REDUCTION IMPLEMENTATION
-    __shared__ float partialSum[@*BLOCK_SIZE];
+    __shared__ float partialSum[2*BLOCK_SIZE];
     
     unsigned int t = threadIdx.x;
     unsigned int start = 2*blockIdx.x*blockDim.x;
     
-    partialSum[t] = input[start + t];
-    partialSum[blockDim.x+t] = input[start + blockDim.x+t];
+    partialSum[t] = in[start + t];
+    partialSum[blockDim.x+t] = in[start + blockDim.x+t];
     
     for(unsigned int stride = 1;
-      stride <= blockDim.x;  stride *= 2;
+      stride <= blockDim.x;  stride *= 2)
     {
       
       __syncthreads();
